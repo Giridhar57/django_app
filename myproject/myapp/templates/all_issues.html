@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    
+    <title>All Issues</title>
+</head>
+<body>
+    <nav class="navbar sticky-top navbar-expand-lg bg-light">
+        <div class="container-fluid">
+          <img src="https://cdn-icons-png.flaticon.com/128/1995/1995450.png" alt="Services" width="35" height="35">
+          <div class="navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <a class="nav-link active" aria-current="page" href="{%url 'new_issue'%}">New Issue</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    <div class="card-group">
+        {%for temp in issues%}
+    <div class="card">
+        <div class="card-body">
+            {%for issue in temp%}
+            <div class="card" style="padding: 10px;">
+                {%if issue.issueID%}
+            <h5 class="card-text"><a href="{%url 'details' issue.issueID%}" style="text-decoration: none;"><b>Issue ID:</b> {{ issue.issueID }}</a></h5>
+            <p class="card-text"><b>User ID:</b> {{ issue.userID }}</p>
+            <p class="card-text"><b>Location:</b> {{ issue.location }}</p>
+            <p class="card-text"><b>Problem:</b> {{ issue.problem }}</p>
+            {%if issue.status == "CLEARED"%}
+            <p class="card-text"><b>Issue Cleared Mechanic Id:</b> {{ issue.assigned_mech }}</p>
+            {%elif issue.status == "INQUEUE"%}
+            <p class="card-text"><b>Assigned Mechanic Id:</b> Waiting</p>
+            {%else%}
+            <p class="card-text"><b>Assigned Mechanic Id:</b> {{ issue.assigned_mech }}</p>
+            {%endif%}
+            <p class="card-text"><b>Time:</b> {{ issue.time }}</p>
+            {%if issue.status == "CLEARED"%}
+            <p class="card-text"><b>Status:</b> <span class="text-success fw-bold">{{ issue.status }}</span></p>
+            {%elif issue.status == "ASSIGNED"%}
+            <p class="card-text"><b>Status:</b> <span class="text-warning fw-bold">{{ issue.status }}</span></p>
+            {%else%}
+            <p class="card-text"><b>Status:</b> <span class="fw-bold" style="color: rgb(184, 29, 29);">{{ issue.status }}</span></p>
+            {%endif%}
+            {%else%}
+            <h3 class="card-title">Issues managed by Agent {{issue}}</h3>
+            {%endif%}
+            </div>
+            {%endfor%}
+        </div>
+    </div>
+    {%endfor%}
+        
+        </div>
+      </div>
+    <!-- {%for temp in issues%}
+    {%for issue in temp%}
+    {%if issue.issueID%}
+    <p><a href="{%url 'details' issue.issueID%}">Issue ID: {{ issue.issueID }}</a></p>
+    <p>User ID: {{ issue.userID }}</p>
+    <p>Location: {{ issue.location }}</p>
+    <p>Problem: {{ issue.problem }}</p>
+    {%if issue.status == "CLEARED"%}
+    <p>Issue Cleared Mechanic Id: {{ issue.assigned_mech }}</p>
+    {%elif issue.status == "INQUEUE"%}
+    <p>Assigned Mechanic Id: Waiting</p>
+    {%else%}
+    <p>Assigned Mechanic Id: {{ issue.assigned_mech }}</p>
+    {%endif%}
+    <p>Time: {{ issue.time }}</p>
+    <p>Status: {{ issue.status }}</p>
+    {%else%}
+    <h2>Issues under Agent {{issue}}</h2>
+    {%endif%}
+    {%endfor%}
+    {%endfor%} -->
+</body>
+</html>
